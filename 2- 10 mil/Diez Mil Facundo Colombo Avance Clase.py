@@ -113,5 +113,13 @@ def cant_rondas_promedio(cant_jugadores, cant_partidas):
     for _ in range(0, cant_partidas):
         cant_rondas += partida_completa(cant_jugadores)
 
-
     return cant_rondas / cant_partidas
+
+
+def chance_de_terminar(cant_jugadores, max_rondas, cant_partidas):
+    rondasAcertadas = 0
+    for i in range(cant_partidas):
+        if partida_completa(cant_jugadores) < max_rondas:
+            rondasAcertadas += 1
+
+    return rondasAcertadas / cant_partidas 
