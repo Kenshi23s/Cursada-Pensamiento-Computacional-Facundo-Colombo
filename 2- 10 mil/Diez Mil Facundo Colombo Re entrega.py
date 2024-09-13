@@ -122,4 +122,4 @@ def chance_de_terminar(cant_jugadores, max_rondas, cant_partidas):
         if partida_completa(cant_jugadores) < max_rondas:
             rondasAcertadas += 1
 
-    return rondasAcertadas / cant_partidas 
+    return (rondasAcertadas / cant_partidas)  * 100.0
