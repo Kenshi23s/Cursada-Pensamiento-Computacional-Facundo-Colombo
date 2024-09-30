@@ -36,11 +36,11 @@ def agregar_particulas(recipiente, posicion, cantidad):
 
 
 def es_borde(recipiente, posicion):
-    return recipiente[posicion] < 0
+    return recipiente[posicion(0),posicion(1)] < 0
 
 
 def dame_uno_al_azar(lista):
-    return random.shuffle(lista)[0]
+    return lista[random.randint(0, len(lista) - 1)]
 
 
 def vecinos(recipiente, posicion):
@@ -87,21 +87,14 @@ def evolucionar_recipiente(recipiente, k):
 
 
 def Testing():
-    r = crear_recipiente(9, 9)  # Recipiente con 7x7 lugares para hacer difusion
-    r = agregar_particulas(r, (4, 4), 50)  # 50 particulas en el centro
-    r = agregar_particulas(r, (1, 7), 50)  # 50 particulas arriba-derecha
-    r = agregar_particulas(r, (7, 1), 50)  # 50 particulas abajo-izquierda
-    r = agregar_particulas(r, (1, 1), 50)  # 50 particulas arriba-izquierda
-    r = agregar_particulas(r, (7, 7), 50)  # 50 particulas abajo-derecha
-    # visualizar_recipiente(r)  # Vemos el recipiente antes de simular
-    r_ref = np.copy(r)  # r_ref es una copia profunda de r, r_ref[(3,3)] == 15
-    r = mover_particulas_recipiente(r, r_ref)
-    # visualizar_recipiente(r)  # despues de 1 paso temporal
-    r_ref = np.copy(r)
-    r = mover_particulas_recipiente(r, r_ref)
-    # visualizar_recipiente(r)
-    return sum(sum(r[1:8, 1:8]))  # Esto deberia dar siempre 250, porque no se pierden particulas
+    r = crear_recipiente(5, 5)
+    es_borde(r, (1, 1))  # False
+    es_borde(r, (0, 1))  # True
+    es_borde(r, (2, 4))  # True
+    es_borde(r, (2, 2))  # False
 
+
+# Esto deberia dar siempre 250, porque no se pierden particulas
 
 def visualizar_recipiente(recipiente):
     plt.figure()
