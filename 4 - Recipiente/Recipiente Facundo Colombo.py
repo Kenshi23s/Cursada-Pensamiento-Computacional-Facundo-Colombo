@@ -1,29 +1,32 @@
 import random
 import numpy as np
 import matplotlib.pyplot as plt
-from fontTools.misc.cython import returns
 
 
 # Facundo Colombo
 
 def crear_recipiente(x, y):
     col = np.zeros((x, y), np.int16)
+    col = setearbordesY(col)
+    col = setearbordesX(col)
 
     return col
 
 
 def setearbordesY(recipiente):
-    maximo = len(recipiente.shape(0) - 1)
-    for j in range(recipiente.shape(1)):
+    maximo = recipiente.shape[0] - 1
+    for j in range(recipiente.shape[1]):
         recipiente[0, j] = -1
         recipiente[maximo, j] = -1
+    return recipiente
 
 
 def setearbordesX(recipiente):
-    maximo = len(recipiente.shape(1) - 1)
-    for i in range(recipiente.shape(0)):
+    maximo = recipiente.shape[1] - 1
+    for i in range(recipiente.shape[0]):
         recipiente[i, 0] = -1
         recipiente[i, maximo] = -1
+    return recipiente
 
 
 def agregar_particulas(recipiente, posicion, cantidad):
@@ -36,7 +39,7 @@ def agregar_particulas(recipiente, posicion, cantidad):
 
 
 def es_borde(recipiente, posicion):
-    return recipiente[posicion(0),posicion(1)] < 0
+    return recipiente[posicion[0], posicion[1]] < 0
 
 
 def dame_uno_al_azar(lista):
@@ -82,6 +85,23 @@ def mover_particulas_recipiente(recipiente, recipiente_original):
 def evolucionar_recipiente(recipiente, k):
     for i in range(k):
         recipiente = mover_particulas_recipiente(recipiente, np.copy(recipiente))
+
+    return recipiente
+
+
+def simular_difusion_horizontal():
+    recipiente = crear_recipiente(35, 35)
+    for i in range(10):
+        visualizar_recipiente(recipiente)
+        recipiente = evolucionar_recipiente(recipiente, 30)
+
+    return recipiente
+
+
+def inicializar_particulas(recipiente, cantidad):
+    for i in recipiente.shape[1]:
+        if not es_borde(recipiente, (1, i)):
+            recipiente[1, i] = cantidad
 
     return recipiente
 
