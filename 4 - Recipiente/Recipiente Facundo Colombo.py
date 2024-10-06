@@ -39,7 +39,9 @@ def agregar_particulas(recipiente, posicion, cantidad):
 
 
 def es_borde(recipiente, posicion):
-    return recipiente[posicion[0], posicion[1]] < 0
+    print(posicion)
+    #print(recipiente[posicion[0], posicion[1]])
+    return recipiente[(posicion[0],posicion[1])] < 0
 
 
 def dame_uno_al_azar(lista):
@@ -64,6 +66,7 @@ def mover_particula(recipiente, posicion):
     azar = dame_uno_al_azar(coleccion)
     recipiente[posicion[0], posicion[1]] -= 1
     recipiente[azar[0], azar[1]] += 1
+    return recipiente
 
 
 def mover_muchas_particulas(recipiente, posicion, cantidad):
@@ -90,7 +93,8 @@ def evolucionar_recipiente(recipiente, k):
 
 
 def simular_difusion_horizontal():
-    recipiente = crear_recipiente(35, 35)
+    recipiente = crear_recipiente(7, 7)
+    recipiente= inicializar_particulas(recipiente,10)
     for i in range(10):
         visualizar_recipiente(recipiente)
         recipiente = evolucionar_recipiente(recipiente, 30)
@@ -99,7 +103,8 @@ def simular_difusion_horizontal():
 
 
 def inicializar_particulas(recipiente, cantidad):
-    for i in recipiente.shape[1]:
+    '''especificaciones'''
+    for i in range(recipiente.shape[1]):
         if not es_borde(recipiente, (1, i)):
             recipiente[1, i] = cantidad
 
@@ -116,6 +121,7 @@ def Testing():
 
 # Esto deberia dar siempre 250, porque no se pierden particulas
 
+
 def visualizar_recipiente(recipiente):
     plt.figure()
     cmap = plt.cm.Blues  # inicializar mapa de colores azules
@@ -123,3 +129,4 @@ def visualizar_recipiente(recipiente):
     plt.imshow(recipiente, cmap=cmap, vmin=0)  # graficar el heatmap usando vmin = 0
     plt.colorbar()  # graficar la barra de escala de colores
     plt.show()  # terminar de graficar y mostrar la figura
+
