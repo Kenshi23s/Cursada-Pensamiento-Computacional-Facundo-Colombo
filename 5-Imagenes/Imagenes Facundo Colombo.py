@@ -1,6 +1,8 @@
+from turtle import Shape
+
+import numpy
 import numpy as np
 import matplotlib.pyplot as plt
-
 arr = np.random.random((10, 12, 3))
 DimensionColores = {"rojo": 0, "verde": 1, "azul": 2}
 
@@ -41,26 +43,24 @@ def aplicar_stencil_a_pos(array, posicion, stencil):
     esquinaSuperiorY = (posicion[1] + limy) // 2
 
     # pos2 = posicion[0] - limx:posicion[0] + limx esto se puede hacer de alguna forma?
+    print(posicion)
+    print("X desde " + str(esquinainferiorX) + " Hasta " + str(esquinaSuperiorX))
+    print("Y desde " + str(esquinainferiorY) + " Hasta " + str(esquinaSuperiorY))
     nuevoarray = array[esquinainferiorX: esquinaSuperiorX, esquinainferiorY: esquinaSuperiorY]
     return multiplicar_y_sumar(stencil, nuevoarray)  # sera asi?
 
 
 def aplicar_stencil(array, stencil):
     copia = array.copy()
-    for i in range(stencil[0], array.shape[0]):
-        for j in range(stencil[1], array.shape[1]):
-            if j > stencil[1] or i > stencil[0]: continue
-        copia = aplicar_stencil_a_pos(copia, i, stencil)
+
+    shapeX = stencil.shape[0]
+    shapeY = stencil.shape[1]
+    copyShapeX = copia.shape[0]
+    copyShapeY = copia.shape[1]
+    for i in range(shapeX, copyShapeX):
+        for j in range(shapeY, copyShapeY):
+            if i + shapeX < copyShapeX and j + shapeY < copyShapeY:
+                copia[i, j] = aplicar_stencil_a_pos(copia, (i, j), stencil)
     return copia
 
-# def Testing() :
-#     posicion = (2,2)
-#     limx = stencil.shape[0] // 2
-#     limy = stencil.shape[1] // 2  # // es division entera, sin decimales
-# 
-#     esquinainferiorX = posicion[0] - limx
-#     esquinaSuperiorX = posicion[0] + limx
-#     esquinainferiorY = posicion[1] - limy
-#     esquinaSuperiorY = posicion[1] + limy
-#     # pos2 = posicion[0] - limx:posicion[0] + limx esto se puede hacer de alguna forma?
-#     nuevoarray = array[esquinainferiorX: esquinaSuperiorX, esquinainferiorY: esquinaSuperiorY]
+
