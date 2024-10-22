@@ -3,8 +3,12 @@ from turtle import Shape
 import numpy
 import numpy as np
 import matplotlib.pyplot as plt
+
 arr = np.random.random((10, 12, 3))
 DimensionColores = {"rojo": 0, "verde": 1, "azul": 2}
+stencilDefault = [[1 / 12, 1 / 8, 1 / 12],
+                  [1 / 8, 1 / 6, 1 / 8],
+                  [1 / 12, 1 / 8, 1 / 12]]
 
 
 def obtener_imagen(nom_arch):
@@ -16,22 +20,29 @@ def separar_canales(imagen):
 
 
 def seleccionar_canal(imagen, nombre_canal):
-    return imagen[:, :, DimensionColores[nombre_canal]]
+    imagencopia = imagen.copy()
+    for nombreActual in DimensionColores.keys():
+        if nombre_canal != nombreActual:
+            imagencopia[:, :, DimensionColores[nombreActual]] = 0
+
+    return imagencopia
 
 
 def convertir_a_grises(imagen):
-    colores = separar_canales(imagen)
-    gris = 0.299 * colores[0]  # Averiguar en casa
-    gris += 0.587 * colores[1]
-    gris += 0.114 * colores[2]
+    rojo, verde, azul = separar_canales(imagen)
+    gris = np.zeros(imagen.shape[0], imagen.shape[1])
+    gris += 0.299 * rojo  # Averiguar en casa
+    gris += 0.587 * verde
+    gris += 0.114 * azul
     return gris
 
 
 def multiplicar_y_sumar(array1, array2):
     return np.sum(array1 * array2)
 
+    # consultar en clase, dudas sobre resolucion
 
-# consultar en clase, dudas sobre resolucion
+
 def aplicar_stencil_a_pos(array, posicion, stencil):
     limx = stencil.shape[0] + 1 // 2
     limy = stencil.shape[
@@ -64,3 +75,10 @@ def aplicar_stencil(array, stencil):
     return copia
 
 
+def suavizar(imagen):
+    rojo, verde, azul = separar_canales(imagen)
+
+    suavizada = aplicar_stencil(rojo, stencilDefault)
+    suavizada += aplicar_stencil(verde, stencilDefault)
+    suavizada += aplicar_stencil(azul, stencilDefault)
+    return suavizada
