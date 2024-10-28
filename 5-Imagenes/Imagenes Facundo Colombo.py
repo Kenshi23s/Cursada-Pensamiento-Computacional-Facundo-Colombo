@@ -1,14 +1,24 @@
-from turtle import Shape
-
-import numpy
 import numpy as np
 import matplotlib.pyplot as plt
 
 arr = np.random.random((10, 12, 3))
 DimensionColores = {"rojo": 0, "verde": 1, "azul": 2}
-stencilDefault = [[1 / 12, 1 / 8, 1 / 12],
-                  [1 / 8, 1 / 6, 1 / 8],
-                  [1 / 12, 1 / 8, 1 / 12]]
+stencilDefault = np.array([
+    [1 / 12, 1 / 8, 1 / 12],
+    [1 / 8, 1 / 6, 1 / 8],
+    [1 / 12, 1 / 8, 1 / 12]
+])
+
+deteccionSaltosH = np.array([
+    [-0.25, 0, 0.25],
+    [-0.50, 0, 0.50],
+    [-0.25, 0, 0.25]
+])
+deteccionSaltosV = np.array([
+    [-0.25, -0.50, -0.25],
+    [0, 0, 0],
+    [0.25, 0.50, 0.25]
+])
 
 
 def obtener_imagen(nom_arch):
@@ -30,7 +40,7 @@ def seleccionar_canal(imagen, nombre_canal):
 
 def convertir_a_grises(imagen):
     rojo, verde, azul = separar_canales(imagen)
-    gris = np.zeros(imagen.shape[0], imagen.shape[1])
+    gris = np.zeros((imagen.shape[0], imagen.shape[1]))
     gris += 0.299 * rojo  # Averiguar en casa
     gris += 0.587 * verde
     gris += 0.114 * azul
@@ -54,9 +64,9 @@ def aplicar_stencil_a_pos(array, posicion, stencil):
     esquinaSuperiorY = (posicion[1] + limy) // 2
 
     # pos2 = posicion[0] - limx:posicion[0] + limx esto se puede hacer de alguna forma?
-    print(posicion)
-    print("X desde " + str(esquinainferiorX) + " Hasta " + str(esquinaSuperiorX))
-    print("Y desde " + str(esquinainferiorY) + " Hasta " + str(esquinaSuperiorY))
+    # print(posicion)
+    # print("X desde " + str(esquinainferiorX) + " Hasta " + str(esquinaSuperiorX))
+    # print("Y desde " + str(esquinainferiorY) + " Hasta " + str(esquinaSuperiorY))
     nuevoarray = array[esquinainferiorX: esquinaSuperiorX, esquinainferiorY: esquinaSuperiorY]
     return multiplicar_y_sumar(stencil, nuevoarray)  # sera asi?
 
@@ -76,9 +86,44 @@ def aplicar_stencil(array, stencil):
 
 
 def suavizar(imagen):
-    rojo, verde, azul = separar_canales(imagen)
-
-    suavizada = aplicar_stencil(rojo, stencilDefault)
-    suavizada += aplicar_stencil(verde, stencilDefault)
-    suavizada += aplicar_stencil(azul, stencilDefault)
+    suavizada = aplicar_stencil(imagen, stencilDefault)
     return suavizada
+
+
+def suavizar_k_veces(imagen, k):
+    copia = imagen.copy()
+    for i in range(k):
+        copia += suavizar(imagen)
+    return copia
+
+
+def suavizar_color(imagen):
+    copia = imagen.copy()
+    return suavizar(copia[:, :, 0]) + suavizar(copia[:, :, 1]) + suavizar(copia[:, :, 2])
+
+
+def suavizar_color_k_veces(imagen, k):
+    copia = imagen.copy()
+    for i in range(k):
+        copia += suavizar_color(imagen)
+    return copia
+
+
+def marcar_saltos_horizontales(imagen):
+    return aplicar_stencil(imagen, deteccionSaltosH)
+
+
+def marcar_saltos_verticales(imagen):
+    return aplicar_stencil(imagen, deteccionSaltosV)
+
+
+def normalizar(imagen):
+    imagen -= np.min(imagen)
+    imagen /= np.max(imagen)
+    return imagen
+
+
+def marcar_bordes(imagen):
+    H = marcar_saltos_horizontales(imagen) ** 2
+    V = marcar_saltos_verticales(imagen) ** 2
+    return np.sqrt(V + H)
