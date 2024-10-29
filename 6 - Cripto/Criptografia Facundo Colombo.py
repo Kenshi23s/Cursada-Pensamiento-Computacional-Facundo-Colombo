@@ -80,7 +80,64 @@ def codificar_archivo(archivo, alfabeto, k):
     nuevonombre = archivo.replace(".txt", ".enc")
     return crear_archivo(nuevonombre, texto)
 
-def decodificar_archivo(nombre,alfabeto,k):
+
+def decodificar_archivo(nombre, alfabeto, k):
     archivo = leer_archivo(nombre)
-    archivo= decodificar(archivo, alfabeto, k)
+    archivo = decodificar(archivo, alfabeto, k)
     return crear_archivo(nombre.replace(".enc", ".dec"), archivo)
+
+
+def quitar(elementos, lista):
+    for item in lista:
+        if item in elementos:
+            lista.remove(item)
+    return lista
+
+
+def sin_repetidos(cadena):
+    norepe = ""
+    for elemento in cadena:
+        if elemento not in norepe:
+            norepe += elemento
+    return norepe
+
+
+def crear_codificacion(palabra, alfabeto):
+    palabra = sin_repetidos(palabra)
+    alfabetoNuevo = palabra + lista_a_palabra(quitar(palabra, list(alfabeto)))
+    return dict(zip(alfabeto, alfabetoNuevo))
+
+
+def lista_a_palabra(lista):
+    palabra = ""
+    for elemento in lista:
+        palabra += elemento
+    return palabra
+
+
+def codificar_con_dicc(mensaje, diccionario):
+    mensaje = normalizar(mensaje)
+    encriptado = ""
+    for caracter in mensaje:
+        if caracter in diccionario:
+            encriptado += diccionario[caracter]
+        else:
+            encriptado += caracter
+
+    return encriptado
+
+
+def decodificar_con_dicc(mensaje, diccionario):
+    return codificar_con_dicc(mensaje, dict(zip(diccionario.values(), diccionario.keys())))
+
+
+def codificar_archivo_con_dicc(nombre, diccionario):
+    texto = leer_archivo(nombre)
+    texto = codificar_con_dicc(texto, diccionario)
+    return crear_archivo(nombre.replace(".txt", ".enc"), texto)
+
+
+def decodificar_archivo_con_dicc(nombre, diccionario):
+    texto = leer_archivo(nombre)
+    texto = decodificar_con_dicc(texto, diccionario)
+    return crear_archivo(nombre.replace(".enc", ".dec"), texto)

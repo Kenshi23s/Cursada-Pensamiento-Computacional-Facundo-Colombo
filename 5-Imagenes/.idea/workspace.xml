@@ -6,6 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="91d039b3-6aaa-4873-8ac9-c48ca4ab0e2c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Imagenes Facundo Colombo.py" beforeDir="false" afterPath="$PROJECT_DIR$/Imagenes Facundo Colombo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../6 - Cripto/Criptografia Facundo Colombo.py" beforeDir="false" afterPath="$PROJECT_DIR$/../6 - Cripto/Criptografia Facundo Colombo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../6 - Cripto/original.dec" beforeDir="false" afterPath="$PROJECT_DIR$/../6 - Cripto/original.dec" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../6 - Cripto/original.enc" beforeDir="false" afterPath="$PROJECT_DIR$/../6 - Cripto/original.enc" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +45,9 @@
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
       <option name="SDK_HOME" value="" />
       <option name="SDK_NAME" value="Python 3.12" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
@@ -86,6 +93,7 @@
       <workItem from="1730144650434" duration="608000" />
       <workItem from="1730145276497" duration="1000" />
       <workItem from="1730145295058" duration="7976000" />
+      <workItem from="1730231862651" duration="41000" />
     </task>
     <servers />
   </component>

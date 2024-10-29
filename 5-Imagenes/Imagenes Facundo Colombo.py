@@ -127,3 +127,4 @@ def marcar_bordes(imagen):
     H = marcar_saltos_horizontales(imagen) ** 2
     V = marcar_saltos_verticales(imagen) ** 2
     return np.sqrt(V + H)
+#dudas con los de aplicar stencil, preguntar en clase
