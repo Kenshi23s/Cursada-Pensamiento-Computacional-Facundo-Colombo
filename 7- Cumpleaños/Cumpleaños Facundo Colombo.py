@@ -108,3 +108,10 @@ def chances_coincidencia(n, n_rep):
             casosfavorables += 1
 
     return casosfavorables / n_rep
+
+
+def VelezJugadorViejo(filas):
+    jugadores = filtrar_filas(filas, "Equipo", "Velez")
+# 15. ¿Cuál es el jugador más viejo de Velez?
+ #16. ¿Cuál es el jugador más petiso de cada equipo?
+# 17. ¿Cuál es el promedio de edad de los delanteros de Talleres de Córdoba
