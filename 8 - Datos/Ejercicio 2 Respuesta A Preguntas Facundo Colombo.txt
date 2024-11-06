@@ -1,0 +1,29 @@
+ 1. ¿Cuál es la selección con más goles?
+	Argentina Con 106 Goles
+
+ 2. ¿Cuál es la selección con más jugadores convocados?
+	Mexico con 50 jugadores
+
+ 3. ¿Cuál es la selección más cara?
+	 Brasil, con un valor de  1188.600 millones de euros
+
+ 4. ¿Cuál es el jugador más goleador de la copa?
+	Messi, con 106 goles
+
+ 5. Hacer una nueva columna con la cantidad de goles por partido de cada jugador. ¿Qué jugador tiene el valor
+ más alto? ¿Y en cada selección?
+	El jugador con valor mas alto es Guillermo Martínez con 1 gol por partido(1 partido y 1 gol).
+	para cada seleccion ver la data frame
+
+ 6. ¿Cuál es la altura promedio de cada selección?
+	Respuesta en Funcion "AlturaPromedioSeleccion"
+
+ 7. ¿Cuál es el jugador con la altura máxima en cada selección?
+	Respuesta en Funcion "AlturaMaximaSeleccion"
+
+ 8. ¿Cuál es la posición que tiene más zurdos? ¿Y la posición donde la relación zurdos es más alta? ¿Existen
+ posiciones ëxclusivas"de zurdos o diestros
+	La posicion que tiene mas zurdos es defensa central.
+	la posicion donde la relacion de zurdos es mas alta es Lateral Izquierdo
+	Si, existen posiciones exclusivas para zurdos y diestros por ej: en interior derecho no hay un solo zurdo
+                         

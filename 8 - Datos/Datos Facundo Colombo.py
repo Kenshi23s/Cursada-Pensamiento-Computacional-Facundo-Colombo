@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 
 # pd.dataframe(listadetuplas) devuelve data frame
 # listadetuplas.columns =["DNI","Cuenta"] se sete columnas
@@ -53,5 +54,36 @@ def AlturaMaximaSeleccion():  # nombre largo
     return copaAmericaData.groupby("Seleccion")["Altura"].max()
 
 
+def ObtenerZurdos():  # nombre largo
+    return copaAmericaData[copaAmericaData["Destreza_pie"] == "zurdo"]
+
+
+def PosicionConMasZurdos():
+    return ObtenerZurdos().groupby("Posicion").size().idxmax()
+
+
+def RelacionZurdos():
+    porPosicion = copaAmericaData.groupby("Posicion").size()
+    zurdosEnPosicion = ObtenerZurdos().groupby("Posicion").size()
+
+    return zurdosEnPosicion / porPosicion
+
+
+# ejercicio3
+def ConvertirADatetime():
+    copaAmericaData["Fecha_nac"] = pd.to_datetime(copaAmericaData["Fecha_nac"], format="%d/%m/%Y")
+    copaAmericaData["MesNacimiento"] = copaAmericaData["Fecha_nac"].dt.month  # para agruparlos por mes (hay otra forma?)
+    copaAmericaData["Trimestre"] = copaAmericaData["Fecha_nac"].dt.quarter
+
+
+def GraficarNacimientos():
+    plt.plot(range(12), copaAmericaData.groupby("MesNacimiento").size())
+    plt.show()
+
+def GraficarNacimientosPorSeleccion():
+    plt.plot(range(12), copaAmericaData.groupby("MesNacimiento").size())
+    plt.show()
+
 copaAmericaData = pd.read_csv('CopaAmerica_equipos.tsv', sep='\t')
 CrearColumnaDeGoles()
+ConvertirADatetime()
