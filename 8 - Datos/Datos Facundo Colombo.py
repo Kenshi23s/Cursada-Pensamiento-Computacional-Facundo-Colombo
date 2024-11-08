@@ -72,7 +72,8 @@ def RelacionZurdos():
 # ejercicio3
 def ConvertirADatetime():
     copaAmericaData["Fecha_nac"] = pd.to_datetime(copaAmericaData["Fecha_nac"], format="%d/%m/%Y")
-    copaAmericaData["MesNacimiento"] = copaAmericaData["Fecha_nac"].dt.month  # para agruparlos por mes (hay otra forma?)
+    copaAmericaData["MesNacimiento"] = copaAmericaData[
+        "Fecha_nac"].dt.month  # para agruparlos por mes (hay otra forma?)
     copaAmericaData["Trimestre"] = copaAmericaData["Fecha_nac"].dt.quarter
 
 
@@ -80,9 +81,14 @@ def GraficarNacimientos():
     plt.plot(range(12), copaAmericaData.groupby("MesNacimiento").size())
     plt.show()
 
+#lo estoy graficando mal, preguntar en clase como hacerlo por barras
 def GraficarNacimientosPorSeleccion():
-    plt.plot(range(12), copaAmericaData.groupby("MesNacimiento").size())
-    plt.show()
+    porseleccion = copaAmericaData.groupby("Seleccion")
+    for seleccion, datos in porseleccion:  # esto devuelve la tupla de ("seleccion,dataframe")
+        plt.title(seleccion)
+        plt.plot(range(4), datos.groupby("Trimestre").size())
+        plt.show()
+
 
 copaAmericaData = pd.read_csv('CopaAmerica_equipos.tsv', sep='\t')
 CrearColumnaDeGoles()
